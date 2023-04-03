@@ -3,10 +3,9 @@ from plotly.subplots import make_subplots
 import numpy as np
 
 # opzet voor de multi-plot
-specs = [[{'type': 'pie'}, {'type': 'pie'}]]
-titles = ["Peilmomenten", "Team"]  # , "Peilmomenten"
+specs = [[{'type': 'scatter'}, {'type': 'scatter'}], [{'type': 'scatter'}, {'type': 'scatter'}]]
+titles = ["Peilmomenten", "Team", "Team", "Team"]  # , "Peilmomenten"
 fig = make_subplots(rows=1, cols=2, subplot_titles=titles, specs=specs)
-
 
 # plotting de gauge
 plot_bgcolor = "#fff"
@@ -86,7 +85,7 @@ shape1 = go.layout.Shape(
         line_color="#333")
 
 shape2 = go.layout.Shape(
-    type="line", xanchor="x", xref="x", yanchor="y", yref="y",
+    type="line", xref="paper", yref="paper",
     x0=0, x1=1,  # + hand_length * np.cos(hand_angle),
     y0=0, y1=1,  # + hand_length * np.sin(hand_angle),
     line=dict(color="#333", width=3)
@@ -97,12 +96,9 @@ fig.add_shape(shape2)
 
 # fig.update_layout(shapes=shapes)
 
-
-
-
 # drie basis plots,
-# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=1)
-# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=1, col=2)
-# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=2)
+fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=1)
+fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=1, col=2)
+fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=2)
 
 fig.show()
