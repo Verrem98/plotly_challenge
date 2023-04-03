@@ -79,14 +79,21 @@ shapes = [
 fig.add_trace(pie_data, 1, 1)
 
 shape1 = go.layout.Shape(
-        type="circle", xanchor="x", xref="x2", yanchor="bottom", yref="y2",
+        type="circle", xref="paper", yref="paper",
         x0=0.45, x1=0.55,
         y0=0.45, y1=0.55,
         fillcolor="#333",
         line_color="#333")
 
-fig.add_shape(shape1, 1, 1)
+shape2 = go.layout.Shape(
+    type="line", xanchor="x", xref="x", yanchor="y", yref="y",
+    x0=0, x1=1,  # + hand_length * np.cos(hand_angle),
+    y0=0, y1=1,  # + hand_length * np.sin(hand_angle),
+    line=dict(color="#333", width=3)
+)
 
+fig.add_shape(shape1)
+fig.add_shape(shape2)
 
 # fig.update_layout(shapes=shapes)
 
