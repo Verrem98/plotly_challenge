@@ -3,9 +3,9 @@ from plotly.subplots import make_subplots
 import numpy as np
 
 # opzet voor de multi-plot
-specs = [[{'type': 'domain'}, {'type': 'scatter'}], [{'type': 'scatter'}, {'type': 'scatter'}]]
-titles = ["Peilmomenten", "Team", "Kennis", "Gilde"]  # , "Peilmomenten"
-fig = make_subplots(rows=2, cols=2, subplot_titles=titles, specs=specs)
+specs = [[{'type': 'pie'}, {'type': 'pie'}]]
+titles = ["Peilmomenten", "Team"]  # , "Peilmomenten"
+fig = make_subplots(rows=1, cols=2, subplot_titles=titles, specs=specs)
 
 
 # plotting de gauge
@@ -20,6 +20,29 @@ hand_length = np.sqrt(2) / 3
 hand_angle = np.pi * (1 - (max(min_value, min(max_value, current_value)) - min_value) / (max_value - min_value))
 l_values = [0.5] + (np.ones(n_quadrants) / 2 / n_quadrants).tolist()
 
+# #layout werkt mischien ook goed?
+pie_layout = go.Layout(
+    showlegend=False,
+    margin=dict(b=0, t=0, l=0, r=0),
+    width=300,
+    height=300,
+    paper_bgcolor=None,
+    shapes=[
+        go.layout.Shape(
+            type="circle", xref="x", yref="y",
+            x0=0.45, x1=0.55,
+            y0=0.45, y1=0.55,
+            fillcolor="#333",
+            line_color="#333",
+        ),
+        go.layout.Shape(
+            type="line", xref="x", yref="y",
+            x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
+            y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
+            line=dict(color="#333", width=3)
+        )
+    ]
+)
 
 pie_data = go.Pie(
     values=l_values,
@@ -40,51 +63,39 @@ pie_data = go.Pie(
 
 shapes = [
     go.layout.Shape(
-        type="circle", xref=1, yref=1,
+        type="circle", xanchor="x", xref="x domain", yanchor="bottom", yref="y domain",
         x0=0.45, x1=0.55,
         y0=0.45, y1=0.55,
         fillcolor="#333",
         line_color="#333"),
     go.layout.Shape(
-        type="line", xref=1, yref=1,
+        type="line", xanchor="x", xref="x domain", yanchor="y", yref="y domain",
         x0=0, x1=1, #+ hand_length * np.cos(hand_angle),
         y0=0, y1=1, #+ hand_length * np.sin(hand_angle),
-        line=dict(color="#333", width=10)
+        line=dict(color="#333", width=3)
     )
 ]
 
-fig.update_layout(
-    shapes=shapes)
-
 fig.add_trace(pie_data, 1, 1)
 
-# #layout werkt mischien ook goed?
-# layout = go.Layout(
-#     showlegend=False,
-#     margin=dict(b=0, t=0, l=0, r=0),
-#     width=300,
-#     height=300,
-#     paper_bgcolor=None,
-#     shapes=[
-#         go.layout.Shape(
-#             type="circle", xref="x", yref="y",
-#             x0=0.45, x1=0.55,
-#             y0=0.45, y1=0.55,
-#             fillcolor="#333",
-#             line_color="#333",
-#         ),
-#         go.layout.Shape(
-#             type="line", xref="x", yref="y",
-#             x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
-#             y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
-#             line=dict(color="#333", width=10)
-#         )
-#     ]
-# )
+shape1 = go.layout.Shape(
+        type="circle", xanchor="x", xref="x2", yanchor="bottom", yref="y2",
+        x0=0.45, x1=0.55,
+        y0=0.45, y1=0.55,
+        fillcolor="#333",
+        line_color="#333")
+
+fig.add_shape(shape1, 1, 1)
+
+
+# fig.update_layout(shapes=shapes)
+
+
+
 
 # drie basis plots,
-fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=1)
-fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=1, col=2)
-fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=2)
+# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=1)
+# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=1, col=2)
+# fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=2)
 
 fig.show()
