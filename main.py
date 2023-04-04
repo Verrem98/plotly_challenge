@@ -3,9 +3,9 @@ from plotly.subplots import make_subplots
 import numpy as np
 
 # opzet voor de multi-plot
-specs = [[{'type': 'scatter'}, {'type': 'scatter'}], [{'type': 'scatter'}, {'type': 'scatter'}]]
+specs = [[{'type': 'pie'}, {'type': 'scatter'}], [{'type': 'scatter'}, {'type': 'scatter'}]]
 titles = ["Peilmomenten", "Team", "Team", "Team"]  # , "Peilmomenten"
-fig = make_subplots(rows=1, cols=2, subplot_titles=titles, specs=specs)
+fig = make_subplots(rows=2, cols=2, subplot_titles=titles, specs=specs)
 
 # plotting de gauge
 plot_bgcolor = "#fff"
@@ -60,21 +60,6 @@ pie_data = go.Pie(
     textposition="outside"
 )
 
-shapes = [
-    go.layout.Shape(
-        type="circle", xanchor="x", xref="x domain", yanchor="bottom", yref="y domain",
-        x0=0.45, x1=0.55,
-        y0=0.45, y1=0.55,
-        fillcolor="#333",
-        line_color="#333"),
-    go.layout.Shape(
-        type="line", xanchor="x", xref="x domain", yanchor="y", yref="y domain",
-        x0=0, x1=1, #+ hand_length * np.cos(hand_angle),
-        y0=0, y1=1, #+ hand_length * np.sin(hand_angle),
-        line=dict(color="#333", width=3)
-    )
-]
-
 fig.add_trace(pie_data, 1, 1)
 
 shape1 = go.layout.Shape(
@@ -93,8 +78,6 @@ shape2 = go.layout.Shape(
 
 fig.add_shape(shape1)
 fig.add_shape(shape2)
-
-# fig.update_layout(shapes=shapes)
 
 # drie basis plots,
 fig.add_trace(go.Scatter(x=[0,1,2,3], y=[0,1,2,3]), row=2, col=1)
