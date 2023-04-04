@@ -4,7 +4,7 @@ import numpy as np
 
 # opzet voor de multi-plot
 specs = [[{'type': 'pie'}, {'type': 'scatter'}], [{'type': 'scatter'}, {'type': 'scatter'}]]
-titles = ["Peilmomenten", "Team", "Team", "Team"]  # , "Peilmomenten"
+titles = ["Peilmomenten", "Team", "Gilde", "Kennis"]  # , "Peilmomenten"
 fig = make_subplots(rows=2, cols=2, subplot_titles=titles, specs=specs)
 
 # plotting de gauge
